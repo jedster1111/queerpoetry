@@ -30,12 +30,6 @@ body {
   align-items: center;
 }
 
-.App-main {
-  grid-area: main;
-  padding: 15px 5px 10px 5px;
-  overflow: auto;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -79,4 +73,8 @@ body {
   margin: 0.6em;
   font-size: 1.8em;
   bottom: 0;
+}
+
+.error-page {
+  padding: 2em;
 }

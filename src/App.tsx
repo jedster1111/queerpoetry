@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import "./App.css";
 import { names } from "./names";
 import poetExampleImage from "./images/poet-portrait-example.jpg";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 type Poet = { id: string; name: string; portraitUrl: string };
 
@@ -25,14 +26,27 @@ const PoetsList = ({ poets }: PoetsListProps) => (
   </div>
 );
 
+const NotFoundDisplay = () => (
+  <div className="error-page">Whoops we&apos;re lost!</div>
+);
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">QUEER POETS IN GREEK</header>
-      <main className="App-body">
-        <PoetsList poets={names.map(createPoet)} />
-      </main>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">QUEER POETS IN GREEK</header>
+        <main className="App-body">
+          <Switch>
+            <Route path="/" exact>
+              <PoetsList poets={names.map(createPoet)} />
+            </Route>
+            <Route path="/">
+              <NotFoundDisplay />
+            </Route>
+          </Switch>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 }
 
