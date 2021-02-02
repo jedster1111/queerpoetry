@@ -1,38 +1,85 @@
+body {
+  margin: 0;
+}
+
 .App {
-  text-align: center;
-}
+  height: 100vh;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  /* grid container settings */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 
+    'header'
+    'main'
+    'footer';
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  
+  grid-area: header;
+
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.App-main {
+  grid-area: main;
+  padding: 15px 5px 10px 5px;
+  overflow: auto;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.PoetsList {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .PoetsList {
+    grid-template-columns: 1fr 1fr;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+@media only screen and (max-width: 480px) {
+  .PoetsList {
+    grid-template-columns: 1fr;
   }
+}
+
+.PoetItem {
+  position: relative;
+
+  height: 0;
+  overflow: hidden;
+  padding-top: calc(410 / 618 * 100%);
+
+  background-image: url(./images/poet-portrait-example.jpg);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.PoetItem-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* padding: 20px; */
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.PoetItem-name {
+  color: white;
+  margin: 15px;
 }
