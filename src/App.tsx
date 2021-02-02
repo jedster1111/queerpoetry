@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import "./App.css";
 import { names } from "./names";
 import poetExampleImage from "./images/poet-portrait-example.jpg";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 type Poet = { id: string; name: string; portraitUrl: string };
 
