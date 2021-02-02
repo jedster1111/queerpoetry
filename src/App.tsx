@@ -2,6 +2,7 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 import "./App.css";
 import { names } from "./names";
+import poetExampleImage from "./images/poet-portrait-example.jpg";
 
 type Poet = { id: string; name: string; portraitUrl: string };
 
@@ -12,6 +13,7 @@ type PoetsListProps = {
 const PoetItem = ({ poet }: { poet: Poet }) => (
   <div className="PoetItem">
     <div className="PoetItem-content">
+      <img className="PoetItem-image" src={poetExampleImage} />
       <h2 className="PoetItem-name">{poet.name}</h2>
     </div>
   </div>
