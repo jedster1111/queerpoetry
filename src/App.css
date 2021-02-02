@@ -1,9 +1,16 @@
 body {
   margin: 0;
+  box-sizing: border-box;
+}
+
+a {
+  color:inherit;
+  text-decoration: none;
 }
 
 .App {
   height: 100vh;
+  width: 100%;
 
   /* grid container settings */
   display: grid;
@@ -13,6 +20,10 @@ body {
     'header'
     'main'
     'footer';
+}
+
+.App-body {
+  width: 100%;
 }
 
 .App-header {
@@ -30,6 +41,11 @@ body {
   align-items: center;
 }
 
+.App-header-title {
+  text-decoration: none;
+
+}
+
 .App-link {
   color: #61dafb;
 }
@@ -38,9 +54,6 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: auto;
-  /* padding: 1em;
-  column-gap: 1em;
-  row-gap: 1em; */
 }
 
 @media only screen and (max-width: 768px) {
@@ -77,4 +90,19 @@ body {
 
 .error-page {
   padding: 2em;
+}
+
+.PoetPage {
+  overflow: hidden
+}
+
+.PoetPage-image {
+  width: 100%;
+  height: 1200px;
+  overflow: hidden;
+
+  background-image: url("./images/poet-portrait-example.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
 }

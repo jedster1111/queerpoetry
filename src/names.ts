@@ -1,3 +1,6 @@
+import { Poem, Poet, PoetMap } from "./types";
+import { v4 as uuid } from "uuid";
+
 export const names = [
   "Jeanne Hruby",
   "Myrta Boulter",
@@ -90,3 +93,43 @@ export const names = [
   "Moon Eusebio",
   "Sheldon Fargo",
 ];
+
+export function createPoet(name: string): Poet {
+  return {
+    id: createIdFromPoetName(name),
+    name,
+    portraitUrl:
+      "https://nypost.com/wp-content/uploads/sites/2/2020/01/peter-chinman-by-michael-j.-fiedler.jpg?quality=90&strip=all&w=618&h=410&crop=1",
+  };
+}
+
+export const poets: Poet[] = names.map(createPoet);
+
+export const poetMap: PoetMap = names.reduce<PoetMap>((accum, name) => {
+  accum[createIdFromPoetName(name)] = {
+    poet: createPoet(name),
+    poems: [
+      {
+        id: uuid(),
+        text: "This is my poem, but I'm not a poet. I just built this website.",
+      },
+      {
+        id: uuid(),
+        text: "This is my poem, but I'm not a poet. I just built this website.",
+      },
+      {
+        id: uuid(),
+        text: "This is my poem, but I'm not a poet. I just built this website.",
+      },
+      {
+        id: uuid(),
+        text: "This is my poem, but I'm not a poet. I just built this website.",
+      },
+    ],
+  };
+  return accum;
+}, {});
+
+function createIdFromPoetName(name: string): string {
+  return name.replace(" ", "-").toLowerCase();
+}

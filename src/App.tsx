@@ -1,22 +1,33 @@
 import React from "react";
-import { v4 as uuid } from "uuid";
 import "./App.css";
-import { names } from "./names";
+import { poetMap, poets } from "./names";
 import poetExampleImage from "./images/poet-portrait-example.jpg";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  useRouteMatch,
+  Link,
+} from "react-router-dom";
+import { Poem, Poet, PoetPageDetails } from "./types";
+import { useScrollToTop } from "./useScrollToTop";
 
-type Poet = { id: string; name: string; portraitUrl: string };
+type PoetItemProps = {
+  poet: Poet;
+};
+
+const PoetItem = ({ poet }: PoetItemProps) => (
+  <Link to={`/poet/${poet.id}`}>
+    <div className="PoetItem">
+      <img className="PoetItem-image" src={poetExampleImage} />
+      <div className="PoetItem-name">{poet.name}</div>
+    </div>
+  </Link>
+);
 
 type PoetsListProps = {
   poets: Poet[];
 };
-
-const PoetItem = ({ poet }: { poet: Poet }) => (
-  <div className="PoetItem">
-    <img className="PoetItem-image" src={poetExampleImage} />
-    <div className="PoetItem-name">{poet.name}</div>
-  </div>
-);
 
 const PoetsList = ({ poets }: PoetsListProps) => (
   <div className="PoetsList">
@@ -30,33 +41,70 @@ const NotFoundDisplay = () => (
   <div className="error-page">Whoops we&apos;re lost!</div>
 );
 
+function usePoetPageDetail(): PoetPageDetails | undefined {
+  const match = useRouteMatch<{ poetId: string }>();
+  const poetId = match.params.poetId.toLowerCase();
+
+  if (!poetId) return undefined;
+
+  return poetMap[poetId];
+}
+
+type PoemsListProps = {
+  poems: Poem[];
+};
+
+const PoemList = ({ poems }: PoemsListProps) => {
+  return (
+    <div>
+      {poems.map((poem) => (
+        <div key={poem.id}>{poem.text}</div>
+      ))}
+    </div>
+  );
+};
+
+const PoetPage = () => {
+  useScrollToTop();
+
+  const poetPageDetail = usePoetPageDetail();
+
+  if (!poetPageDetail) return <NotFoundDisplay />;
+
+  return (
+    <div className="PoetPage">
+      <div className="PoetPage-image"></div>
+      <div>This is the page for {poetPageDetail.poet.name}!</div>
+      <PoemList poems={poetPageDetail.poems} />
+    </div>
+  );
+};
+
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <header className="App-header">QUEER POETS IN GREEK</header>
-        <main className="App-body">
+        <header className="App-header">
+          <Link to="/" className="App-header-title">
+            QUEER POETS IN GREEK
+          </Link>
+        </header>
+        <div className="App-body">
           <Switch>
+            <Route path="/poet/:poetId">
+              <PoetPage />
+            </Route>
             <Route path="/" exact>
-              <PoetsList poets={names.map(createPoet)} />
+              <PoetsList poets={poets} />
             </Route>
             <Route path="/">
               <NotFoundDisplay />
             </Route>
           </Switch>
-        </main>
+        </div>
       </div>
     </BrowserRouter>
   );
 }
 
 export default App;
-
-function createPoet(name: string): Poet {
-  return {
-    id: uuid(),
-    name,
-    portraitUrl:
-      "https://nypost.com/wp-content/uploads/sites/2/2020/01/peter-chinman-by-michael-j.-fiedler.jpg?quality=90&strip=all&w=618&h=410&crop=1",
-  };
-}
