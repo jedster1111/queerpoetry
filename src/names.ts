@@ -1,4 +1,4 @@
-import { Poem, Poet, PoetMap } from "./types";
+import { Poet, PoetMap } from "./types";
 import { v4 as uuid } from "uuid";
 
 export const names = [
