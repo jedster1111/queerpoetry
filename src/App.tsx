@@ -12,10 +12,8 @@ type PoetsListProps = {
 
 const PoetItem = ({ poet }: { poet: Poet }) => (
   <div className="PoetItem">
-    <div className="PoetItem-content">
-      <img className="PoetItem-image" src={poetExampleImage} />
-      <h2 className="PoetItem-name">{poet.name}</h2>
-    </div>
+    <img className="PoetItem-image" src={poetExampleImage} />
+    <div className="PoetItem-name">{poet.name}</div>
   </div>
 );
 
@@ -30,7 +28,7 @@ const PoetsList = ({ poets }: PoetsListProps) => (
 function App() {
   return (
     <div className="App">
-      <header className="App-header">Queer Poetry</header>
+      <header className="App-header">QUEER POETS IN GREEK</header>
       <main className="App-body">
         <PoetsList poets={names.map(createPoet)} />
       </main>
