@@ -1,6 +1,6 @@
 export type Poet = { id: string; name: string; portraitUrl: string };
 
-export type Poem = { id: string; text: string };
+export type Poem = { url: string };
 
 export type PoetPageDetails = {
   poet: Poet;

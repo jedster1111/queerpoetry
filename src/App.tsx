@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./App.css";
 import { poetMap, poets } from "./names";
 import poetExampleImage from "./images/poet-portrait-example.jpg";
@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import { Poem, Poet, PoetPageDetails } from "./types";
 import { useScrollToTop } from "./useScrollToTop";
+import { usePoems } from "./useMarkdownFile";
+import ReactMarkdown from "react-markdown";
 
 type PoetItemProps = {
   poet: Poet;
@@ -55,10 +57,17 @@ type PoemsListProps = {
 };
 
 const PoemList = ({ poems }: PoemsListProps) => {
+  const poemUrls = useMemo(() => poems.map((poem) => poem.url), [poems]);
+  const poemsWithMarkdown = usePoems(poemUrls);
+
+  if (!poemsWithMarkdown) return <div>LOADING...</div>;
+
   return (
-    <div>
-      {poems.map((poem) => (
-        <div key={poem.id}>{poem.text}</div>
+    <div className="PoemList">
+      {poemsWithMarkdown.map((poemMarkdown, i) => (
+        <div key={i}>
+          <ReactMarkdown>{poemMarkdown}</ReactMarkdown>
+        </div>
       ))}
     </div>
   );
