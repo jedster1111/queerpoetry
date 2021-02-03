@@ -1,5 +1,4 @@
 import { Poet, PoetMap } from "./types";
-import sharonOldsPoems from "./poems/sharonOlds";
 
 export const names = [
   "Jeanne Hruby",
@@ -108,7 +107,10 @@ export const poets: Poet[] = names.map(createPoet);
 export const poetMap: PoetMap = names.reduce<PoetMap>((accum, name) => {
   accum[createIdFromPoetName(name)] = {
     poet: createPoet(name),
-    poems: sharonOldsPoems.map((poemUrl) => ({ url: poemUrl })),
+    poems: [
+      { id: "sexWithoutLove", author: "sharonOlds" },
+      { id: "theWorstThing", author: "sharonOlds" },
+    ],
   };
   return accum;
 }, {});

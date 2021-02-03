@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
+import { Poem } from "./types";
 
-export function usePoems(fileUrls: string[]): undefined | string[] {
-  const [poems, setPoems] = useState<undefined | string[]>(undefined);
+export function usePoems(poems: Poem[]): undefined | string[] {
+  const [markdown, setMarkdown] = useState<undefined | string[]>(undefined);
 
   useEffect(() => {
-    setPoems(undefined);
+    setMarkdown(undefined);
 
     const poemPromises = Promise.all(
-      fileUrls.map((url) => fetch(url).then((response) => response.text()))
+      poems.map((poem) => {
+        return import(`./poems/${poem.author}/${poem.id}.md`)
+          .then((thingy) => thingy.default)
+          .then((url: string) => fetch(url))
+          .then((response) => response.text());
+      })
     );
 
-    poemPromises.then((poems) => setPoems(poems));
+    poemPromises.then((poems) => setMarkdown(poems));
 
-    return () => setPoems(undefined);
-  }, [fileUrls]);
+    return () => setMarkdown(undefined);
+  }, [poems]);
 
-  return poems;
+  return markdown;
 }

@@ -57,8 +57,7 @@ type PoemsListProps = {
 };
 
 const PoemList = ({ poems }: PoemsListProps) => {
-  const poemUrls = useMemo(() => poems.map((poem) => poem.url), [poems]);
-  const poemsWithMarkdown = usePoems(poemUrls);
+  const poemsWithMarkdown = usePoems(poems);
 
   if (!poemsWithMarkdown) return <div>LOADING...</div>;
 
