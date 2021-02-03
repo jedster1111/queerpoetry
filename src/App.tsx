@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import "./App.css";
 import { poetMap, poets } from "./names";
 import poetExampleImage from "./images/poet-portrait-example.jpg";
